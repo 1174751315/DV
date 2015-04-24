@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <!--<script src="../d3/end.js"></script>-->
+    <script src="http://d3js.org/d3.v3.js"></script>
+    <script type="text/javascript">
+
+        var datas=[0.142,0.3456432,0.978785,0.1415,0.65438];
+        var xs=[1,2,3,4,5];
+        var ys=[1,6,3,5,2];
+
+        svg=d3.select("body").append("svg");
+        d3.select("svg")
+                .selectAll("circle")
+                .data(datas)
+                .append("circle");
+        d3.selectAll("circle")
+                .attr("cx",function(d,i){
+                    return xs[i];
+                })
+                .attr("cy",function(d,i){
+                    return ys[i];
+                })
+                .attr("r",function(d){
+                    return d*20;
+                });
+
+
+
+//        d3.select("body").append("table");
+//        d3.select("body").select("table").data(loads,function(d){return d;});
+
+
+    </script>
+</head>
+<body>
+<!--<table>-->
+    <!--<tr>adsf</tr>-->
+    <!--<td>asdfsad</td>-->
+<!--</table>-->
+
+</body>
+</html>

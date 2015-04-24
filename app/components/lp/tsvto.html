@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: auto;
+  position: relative;
+  width: 960px;
+}
+
+text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+form {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+</style>
+<form>
+  <label><input type="radio" name="mode" value="grouped"> Grouped</label>
+  <label><input type="radio" name="mode" value="stacked" checked> Stacked</label>
+</form>
+<script src="http://d3js.org/d3.v3.js"></script>
+<script>
+
+var n = 2, // number of layers
+    m = 141, // number of samples per layer
+    stack = d3.layout.stack(),
+    layers =  [[{y: 0.109306, x: 1, y0: 0.1}, {y: 0.177199, x: 2, y0: 0.1}, {y: 0.102147, x: 3, y0: 0.1}, {y: 0.096095, x: 4, y0: 0.1}, {y: 0.109124, x: 5, y0: 0.1}, {y: 0.109735, x: 6, y0: 0.1}, {y: 0.096629, x: 7, y0: 0.1}, {y: 0.157764, x: 8, y0: 0.1}, {y: 0.109324, x: 9, y0: 0.1}, {y: 0.174087, x: 10, y0: 0.1}, {y: 0.113581, x: 11, y0: 0.1}, {y: 0.123815, x: 12, y0: 0.1}, {y: 0.113085, x: 13, y0: 0.1}, {y: 0.191981, x: 14, y0: 0.1}, {y: 0.092262, x: 15, y0: 0.1}, {y: 0.111107, x: 16, y0: 0.1}, {y: 0.100726, x: 17, y0: 0.1}, {y: 0.111426, x: 18, y0: 0.1}, {y: 0.116081, x: 19, y0: 0.1}, {y: 0.115898, x: 20, y0: 0.1}, {y: 0.116943, x: 21, y0: 0.1}, {y: 0.135849, x: 22, y0: 0.1}, {y: 0.126113, x: 23, y0: 0.1}, {y: 0.091972, x: 24, y0: 0.1}, {y: 0.165162, x: 25, y0: 0.1}, {y: 0.022828, x: 26, y0: 0.1}, {y: 0.5, x: 27, y0: 0.1}, {y: 0.5, x: 28, y0: 0.1}, {y: 0.5, x: 29, y0: 0.1}, {y: 0.5, x: 30, y0: 0.1}, {y: 0.388047, x: 31, y0: 0.1}, {y: 0.5, x: 32, y0: 0.1}, {y: 0.5, x: 33, y0: 0.1}, {y: 0.5, x: 34, y0: 0.1}, {y: 0.5, x: 35, y0: 0.1}, {y: 0.5, x: 36, y0: 0.1}, {y: 0.5, x: 37, y0: 0.1}, {y: 0.5, x: 38, y0: 0.1}, {y: 0.5, x: 39, y0: 0.1}, {y: 0.5, x: 40, y0: 0.1}, {y: 0.388786, x: 41, y0: 0.1}, {y: 0.159952, x: 42, y0: 0.1}, {y: 0.135427, x: 43, y0: 0.1}, {y: 0.135417, x: 44, y0: 0.1}, {y: 0.12247, x: 45, y0: 0.1}, {y: 0.118826, x: 46, y0: 0.1}, {y: 0.177577, x: 47, y0: 0.1}, {y: 0.15437, x: 48, y0: 0.1}, {y: 0.154272, x: 49, y0: 0.1}, {y: 0.151138, x: 50, y0: 0.1}, {y: 0.166128, x: 51, y0: 0.1}, {y: 0.176831, x: 52, y0: 0.1}, {y: 0.176882, x: 53, y0: 0.1}, {y: 0.5, x: 54, y0: 0.1}, {y: 0.352618, x: 55, y0: 0.1}, {y: 0.102105, x: 56, y0: 0.1}, {y: 0.102367, x: 57, y0: 0.1}, {y: 0.112689, x: 58, y0: 0.1}, {y: 0.112735, x: 59, y0: 0.1}, {y: 0.112513, x: 60, y0: 0.1}, {y: 0.112423, x: 61, y0: 0.1}, {y: 0.203834, x: 62, y0: 0.1}, {y: 0.129096, x: 63, y0: 0.1}, {y: 0.095074, x: 64, y0: 0.1}, {y: 0.5, x: 65, y0: 0.1}, {y: 0.116756, x: 66, y0: 0.1}, {y: 0.5, x: 67, y0: 0.1}, {y: 0.5, x: 68, y0: 0.1}, {y: 0.44759, x: 69, y0: 0.1}, {y: 0.474806, x: 70, y0: 0.1}, {y: 0.5, x: 71, y0: 0.1}, {y: 0.343097, x: 72, y0: 0.1}, {y: 0.5, x: 73, y0: 0.1}, {y: 0.496384, x: 74, y0: 0.1}, {y: 0.5, x: 75, y0: 0.1}, {y: 0.24424, x: 76, y0: 0.1}, {y: 0.5, x: 77, y0: 0.1}, {y: 0.5, x: 78, y0: 0.1}, {y: 0.112214, x: 79, y0: 0.1}, {y: 0.111625, x: 80, y0: 0.1}, {y: 0.112887, x: 81, y0: 0.1}, {y: 0.218768, x: 82, y0: 0.1}, {y: 0.222071, x: 83, y0: 0.1}, {y: 0.343147, x: 84, y0: 0.1}, {y: 0.277505, x: 85, y0: 0.1}, {y: 0.259236, x: 86, y0: 0.1}, {y: 0.123542, x: 87, y0: 0.1}, {y: 0.123353, x: 88, y0: 0.1}, {y: 0.141988, x: 89, y0: 0.1}, {y: 0.21691, x: 90, y0: 0.1}, {y: 0.184835, x: 91, y0: 0.1}, {y: 0.174338, x: 92, y0: 0.1}, {y: 0.171968, x: 93, y0: 0.1}, {y: 0.135702, x: 94, y0: 0.1}, {y: 0.113815, x: 95, y0: 0.1}, {y: 0.10932, x: 96, y0: 0.1}, {y: 0.147191, x: 97, y0: 0.1}, {y: 0.147142, x: 98, y0: 0.1}, {y: 0.117909, x: 99, y0: 0.1}, {y: 0.111481, x: 100, y0: 0.1}, {y: 0.155197, x: 101, y0: 0.1}, {y: 0.136609, x: 102, y0: 0.1}, {y: 0.133487, x: 103, y0: 0.1}, {y: 0.125134, x: 104, y0: 0.1}, {y: 0.154493, x: 105, y0: 0.1}, {y: 0.133496, x: 106, y0: 0.1}, {y: 0.125172, x: 107, y0: 0.1}, {y: 0.154479, x: 108, y0: 0.1}, {y: 0.142837, x: 109, y0: 0.1}, {y: 0.351227, x: 110, y0: 0.1}, {y: 0.349861, x: 111, y0: 0.1}, {y: 0.369173, x: 112, y0: 0.1}, {y: 0.139666, x: 113, y0: 0.1}, {y: 0.116803, x: 114, y0: 0.1}, {y: 0.5, x: 115, y0: 0.1}, {y: 0.450784, x: 116, y0: 0.1}, {y: 0.5, x: 117, y0: 0.1}, {y: 0.5, x: 118, y0: 0.1}, {y: 0.5, x: 119, y0: 0.1}, {y: 0.5, x: 120, y0: 0.1}, {y: 0.073131, x: 121, y0: 0.1}, {y: 0.088092, x: 122, y0: 0.1}, {y: 0.246681, x: 123, y0: 0.1}, {y: 0.3144, x: 124, y0: 0.1}, {y: 0.092482, x: 125, y0: 0.1}, {y: 0.092707, x: 126, y0: 0.1}, {y: 0.074983, x: 127, y0: 0.1}, {y: 0.075053, x: 128, y0: 0.1}, {y: 0.106002, x: 129, y0: 0.1}, {y: 0.102836, x: 130, y0: 0.1}, {y: 0.092732, x: 131, y0: 0.1}, {y: 0.092738, x: 132, y0: 0.1}, {y: 0.5, x: 133, y0: 0.1}, {y: 0.5, x: 134, y0: 0.1}, {y: 0.5, x: 135, y0: 0.1}, {y: 0.5, x: 136, y0: 0.1}, {y: 0.5, x: 137, y0: 0.1}, {y: 0.5, x: 138, y0: 0.1}, {y: 0.5, x: 139, y0: 0.1}, {y: 0.5, x: 140, y0: 0.1}, {y: 0.5, x: 141, y0: 0.1}, {y: 0.1, x: 1, y0: 0}, {y: 0.1, x: 2, y0: 0}, {y: 0.1, x: 3, y0: 0}, {y: 0.1, x: 4, y0: 0}, {y: 0.1, x: 5, y0: 0}, {y: 0.1, x: 6, y0: 0}, {y: 0.1, x: 7, y0: 0}, {y: 0.1, x: 8, y0: 0}, {y: 0.1, x: 9, y0: 0}, {y: 0.1, x: 10, y0: 0}, {y: 0.1, x: 11, y0: 0}, {y: 0.1, x: 12, y0: 0}, {y: 0.1, x: 13, y0: 0}, {y: 0.1, x: 14, y0: 0}, {y: 0.1, x: 15, y0: 0}, {y: 0.1, x: 16, y0: 0}, {y: 0.1, x: 17, y0: 0}, {y: 0.1, x: 18, y0: 0}, {y: 0.1, x: 19, y0: 0}, {y: 0.1, x: 20, y0: 0}, {y: 0.1, x: 21, y0: 0}, {y: 0.1, x: 22, y0: 0}, {y: 0.1, x: 23, y0: 0}, {y: 0.1, x: 24, y0: 0}, {y: 0.1, x: 25, y0: 0}, {y: 0.1, x: 26, y0: 0}, {y: 0.1, x: 27, y0: 0}, {y: 0.1, x: 28, y0: 0}, {y: 0.1, x: 29, y0: 0}, {y: 0.1, x: 30, y0: 0}, {y: 0.1, x: 31, y0: 0}, {y: 0.1, x: 32, y0: 0}, {y: 0.1, x: 33, y0: 0}, {y: 0.1, x: 34, y0: 0}, {y: 0.1, x: 35, y0: 0}, {y: 0.1, x: 36, y0: 0}, {y: 0.1, x: 37, y0: 0}, {y: 0.1, x: 38, y0: 0}, {y: 0.1, x: 39, y0: 0}, {y: 0.1, x: 40, y0: 0}, {y: 0.1, x: 41, y0: 0}, {y: 0.1, x: 42, y0: 0}, {y: 0.1, x: 43, y0: 0}, {y: 0.1, x: 44, y0: 0}, {y: 0.1, x: 45, y0: 0}, {y: 0.1, x: 46, y0: 0}, {y: 0.1, x: 47, y0: 0}, {y: 0.1, x: 48, y0: 0}, {y: 0.1, x: 49, y0: 0}, {y: 0.1, x: 50, y0: 0}, {y: 0.1, x: 51, y0: 0}, {y: 0.1, x: 52, y0: 0}, {y: 0.1, x: 53, y0: 0}, {y: 0.1, x: 54, y0: 0}, {y: 0.1, x: 55, y0: 0}, {y: 0.1, x: 56, y0: 0}, {y: 0.1, x: 57, y0: 0}, {y: 0.1, x: 58, y0: 0}, {y: 0.1, x: 59, y0: 0}, {y: 0.1, x: 60, y0: 0}, {y: 0.1, x: 61, y0: 0}, {y: 0.1, x: 62, y0: 0}, {y: 0.1, x: 63, y0: 0}, {y: 0.1, x: 64, y0: 0}, {y: 0.1, x: 65, y0: 0}, {y: 0.1, x: 66, y0: 0}, {y: 0.1, x: 67, y0: 0}, {y: 0.1, x: 68, y0: 0}, {y: 0.1, x: 69, y0: 0}, {y: 0.1, x: 70, y0: 0}, {y: 0.1, x: 71, y0: 0}, {y: 0.1, x: 72, y0: 0}, {y: 0.1, x: 73, y0: 0}, {y: 0.1, x: 74, y0: 0}, {y: 0.1, x: 75, y0: 0}, {y: 0.1, x: 76, y0: 0}, {y: 0.1, x: 77, y0: 0}, {y: 0.1, x: 78, y0: 0}, {y: 0.1, x: 79, y0: 0}, {y: 0.1, x: 80, y0: 0}, {y: 0.1, x: 81, y0: 0}, {y: 0.1, x: 82, y0: 0}, {y: 0.1, x: 83, y0: 0}, {y: 0.1, x: 84, y0: 0}, {y: 0.1, x: 85, y0: 0}, {y: 0.1, x: 86, y0: 0}, {y: 0.1, x: 87, y0: 0}, {y: 0.1, x: 88, y0: 0}, {y: 0.1, x: 89, y0: 0}, {y: 0.1, x: 90, y0: 0}, {y: 0.1, x: 91, y0: 0}, {y: 0.1, x: 92, y0: 0}, {y: 0.1, x: 93, y0: 0}, {y: 0.1, x: 94, y0: 0}, {y: 0.1, x: 95, y0: 0}, {y: 0.1, x: 96, y0: 0}, {y: 0.1, x: 97, y0: 0}, {y: 0.1, x: 98, y0: 0}, {y: 0.1, x: 99, y0: 0}, {y: 0.1, x: 100, y0: 0}, {y: 0.1, x: 101, y0: 0}, {y: 0.1, x: 102, y0: 0}, {y: 0.1, x: 103, y0: 0}, {y: 0.1, x: 104, y0: 0}, {y: 0.1, x: 105, y0: 0}, {y: 0.1, x: 106, y0: 0}, {y: 0.1, x: 107, y0: 0}, {y: 0.1, x: 108, y0: 0}, {y: 0.1, x: 109, y0: 0}, {y: 0.1, x: 110, y0: 0}, {y: 0.1, x: 111, y0: 0}, {y: 0.1, x: 112, y0: 0}, {y: 0.1, x: 113, y0: 0}, {y: 0.1, x: 114, y0: 0}, {y: 0.1, x: 115, y0: 0}, {y: 0.1, x: 116, y0: 0}, {y: 0.1, x: 117, y0: 0}, {y: 0.1, x: 118, y0: 0}, {y: 0.1, x: 119, y0: 0}, {y: 0.1, x: 120, y0: 0}, {y: 0.1, x: 121, y0: 0}, {y: 0.1, x: 122, y0: 0}, {y: 0.1, x: 123, y0: 0}, {y: 0.1, x: 124, y0: 0}, {y: 0.1, x: 125, y0: 0}, {y: 0.1, x: 126, y0: 0}, {y: 0.1, x: 127, y0: 0}, {y: 0.1, x: 128, y0: 0}, {y: 0.1, x: 129, y0: 0}, {y: 0.1, x: 130, y0: 0}, {y: 0.1, x: 131, y0: 0}, {y: 0.1, x: 132, y0: 0}, {y: 0.1, x: 133, y0: 0}, {y: 0.1, x: 134, y0: 0}, {y: 0.1, x: 135, y0: 0}, {y: 0.1, x: 136, y0: 0}, {y: 0.1, x: 137, y0: 0}, {y: 0.1, x: 138, y0: 0}, {y: 0.1, x: 139, y0: 0}, {y: 0.1, x: 140, y0: 0}, {y: 0.1, x: 141, y0: 0}]],
+    yGroupMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y; }); }),
+    yStackMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y0 + d.y; }); });
+
+var margin = {top: 40, right: 10, bottom: 20, left: 10},
+    width = 1600 - margin.left - margin.right,
+    height = 800 - margin.top - margin.bottom;
+
+var x = d3.scale.ordinal()
+    .domain(d3.range(m))
+    .rangeRoundBands([0, width], .08);
+
+var y = d3.scale.linear()
+    .domain([0, yStackMax])
+    .range([height, 0]);
+
+var color = d3.scale.linear()
+    .domain([0, n - 1])
+    .range(["#aad", "#556"]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .tickSize(0)
+    .tickPadding(6)
+    .orient("bottom");
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var layer = svg.selectAll(".layer")
+    .data(layers)
+  .enter().append("g")
+    .attr("class", "layer")
+    .style("fill", function(d, i) { return color(i); });
+
+var rect = layer.selectAll("rect")
+    .data(function(d) { return d; })
+  .enter().append("rect")
+    .attr("x", function(d) { return x(d.x); })
+    .attr("y", height)
+    .attr("width", x.rangeBand())
+    .attr("height", 0);
+
+rect.transition()
+    .delay(function(d, i) { return i * 10; })
+    .attr("y", function(d) { return y(d.y0 + d.y); })
+    .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); });
+
+svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis);
+
+d3.selectAll("input").on("change", change);
+
+var timeout = setTimeout(function() {
+  d3.select("input[value=\"grouped\"]").property("checked", true).each(change);
+}, 2000);
+
+function change() {
+  clearTimeout(timeout);
+  if (this.value === "grouped") transitionGrouped();
+  else transitionStacked();
+}
+
+function transitionGrouped() {
+  y.domain([0, yGroupMax]);
+
+  rect.transition()
+      .duration(500)
+      .delay(function(d, i) { return i * 10; })
+      .attr("x", function(d, i, j) { return x(d.x) + x.rangeBand() / n * j; })
+      .attr("width", x.rangeBand() / n)
+    .transition()
+      .attr("y", function(d) { return y(d.y); })
+      .attr("height", function(d) { return height - y(d.y); });
+}
+
+function transitionStacked() {
+  y.domain([0, yStackMax]);
+
+  rect.transition()
+      .duration(500)
+      .delay(function(d, i) { return i * 10; })
+      .attr("y", function(d) { return y(d.y0 + d.y); })
+      .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
+    .transition()
+      .attr("x", function(d) { return x(d.x); })
+      .attr("width", x.rangeBand());
+}
+
+// Inspired by Lee Byron's test data generator.
+function bumpLayer(n, o) {
+
+	
+  return a.map(function(d, i) { return {x: i, y: Math.max(0, d)}; });
+}
+
+</script>
